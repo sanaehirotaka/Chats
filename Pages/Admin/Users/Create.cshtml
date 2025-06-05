@@ -1,0 +1,54 @@
+@page
+@model Chats.Pages.Admin.Users.CreateModel
+@using Chats.Data
+@{
+    ViewData["Title"] = "新規ユーザー作成";
+}
+<div class="row">
+    <div class="col-md-8 offset-md-2 content-container">
+        <h2>@ViewData["Title"]</h2>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.DisplayName"></label>
+                <input asp-for="Input.DisplayName" class="form-control" />
+                <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.Role"></label><br />
+                @foreach (var role in Enum.GetValues(typeof(UserRole)).Cast<UserRole>().Where(r => r != UserRole.None))
+                {
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="@($"Input_Role_{(int)role}")"
+                               name="Input.Role"
+                               value="@((int)role)"
+                               @( (Model.Input.Role & role) == role ? "checked" : "" ) />
+                        <label class="form-check-label" for="@($"Input_Role_{(int)role}")">@role.ToString()</label>
+                    </div>
+                }
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary me-2">作成</button>
+                <a asp-page="Index" class="btn btn-secondary">一覧に戻る</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+@page
+@model Chats.Pages.Admin.Users.IndexModel
+@using Chats.Data
+@{
+    ViewData["Title"] = "ユーザー管理";
+}
+<div class="row">
+    <div class="col-md-8 offset-md-2 content-container">
+        <h2>@ViewData["Title"]</h2>
+
+        <p class="mb-3">
+            <a asp-page="Create" class="btn btn-primary">新規作成</a>
+        </p>
+
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].DisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info me-2">編集</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary me-2">詳細</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">削除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+</div>

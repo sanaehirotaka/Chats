@@ -1,0 +1,41 @@
+@page
+@model Chats.Pages.Admin.Users.DetailsModel
+@using Chats.Data
+@{
+    ViewData["Title"] = "ユーザー詳細";
+}
+<div class="row">
+    <div class="col-md-8 offset-md-2 content-container">
+        <h2>@ViewData["Title"]</h2>
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.User.DisplayName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.User.DisplayName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.User.Role)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.User.Role)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.User.CreatedAt)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.User.CreatedAt)
+            </dd>
+        </dl>
+        <div class="mt-3">
+            <a asp-page="./Edit" asp-route-id="@Model.User.Id" class="btn btn-primary me-2">編集</a>
+            <a asp-page="./Index" class="btn btn-secondary">一覧に戻る</a>
+        </div>
+    </div>
+</div>

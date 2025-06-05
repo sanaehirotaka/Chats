@@ -1,0 +1,25 @@
+@page
+@model Chats.Pages.ChatModel
+@{
+    ViewData["Title"] = "無題のチャット";
+}
+@section Head {
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/lib/marked.min.js" asp-append-version="true" defer></script>
+    <script src="~/Pages/Chat.cshtml.js" asp-append-version="true" defer></script>
+}
+
+<div class="row">
+    <div class="col-md-12 content-container">
+        <h2>@ViewData["Title"]</h2>
+        <div id="chat-container" class="mb-3">
+        </div>
+        <div class="input-group">
+            <textarea id="messageInput" class="form-control" placeholder="メッセージを入力..." rows="2"></textarea>
+            <button class="btn btn-primary" id="sendMessageButton">送信</button>
+        </div>
+    </div>
+</div>

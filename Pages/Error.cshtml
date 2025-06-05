@@ -1,0 +1,26 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "エラー";
+}
+
+<h1 class="text-danger">エラー。</h1>
+<h2 class="text-danger">リクエストの処理中にエラーが発生しました。</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>リクエストID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>開発モード</h3>
+<p>
+    <strong>開発</strong>環境に切り替えると、発生したエラーに関する詳細情報が表示されます。
+</p>
+<p>
+    <strong>開発環境は、デプロイされたアプリケーションで有効にすべきではありません。</strong>
+    これにより、例外からの機密情報がエンドユーザーに表示される可能性があります。
+    ローカルデバッグの場合、<strong>ASPNETCORE_ENVIRONMENT</strong> 環境変数を <strong>Development</strong> に設定し、
+    アプリを再起動して<strong>開発</strong>環境を有効にしてください。
+</p>

@@ -1,0 +1,79 @@
+/* This is the CSS file for the Chat page. */
+
+.content-container {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    display: flex;
+}
+
+.chat-message.assistant {
+    justify-content: flex-start;
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    position: relative; /* ボタンを絶対配置するために追加 */
+}
+:is(.message-bubble:hover, .message-bubble:focus, .message-bubble:has(:focus), .message-bubble:has([contentEditable])) .chat-action {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.chat-action {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -1.5rem;
+    right: -1rem; 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.chat-action-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    font-size: 1rem;
+}
+
+.message-bubble:has([contentEditable]) :is(.delete-button, .regenerate-button) {
+    display: none;
+}
+
+.chat-message.assistant .message-bubble {
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #dee2e6;
+}
+
+.chat-message.user .message-bubble {
+    background-color: #007bff;
+    color: #fff;
+}
