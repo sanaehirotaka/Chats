@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/Chats.styles.css" asp-append-version="true" />
     <!-- "Head"セクションをレンダリングします（オプション） -->
     @await RenderSectionAsync("Head", required: false)
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <!-- ヘッダーセクション -->
@@ -28,9 +29,6 @@
             <div class="navbar-collapse collapse">
                 <!-- 左側のナビゲーションアイテム -->
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item m-1">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Chat">チャット</a>
-                    </li>
                     <!-- ユーザーがログインしており、かつ管理者ロールの場合に表示されるメニューアイテム -->
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
@@ -94,7 +92,9 @@
                         <h5 class="modal-title" data-dialog-part="title"></h5>
                         <button type="button" class="btn-close" aria-label="Close" data-dialog-part="closeButton"></button>
                     </div>
-                    <div class="modal-body" data-dialog-part="message">
+                    <div class="modal-body">
+                        <p data-dialog-part="message"></p>
+                        <input type="text" class="form-control" data-dialog-part="input" style="display: none;">
                     </div>
                     <div class="modal-footer" data-dialog-part="footer">
                         <button type="button" class="btn btn-secondary" data-dialog-part="cancelButton">キャンセル</button>

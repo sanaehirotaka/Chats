@@ -11,6 +11,10 @@ public class DetailsModel : PageModel
 {
     private readonly AppDbContext _context;
 
+    /// <summary>
+    /// DetailsModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="context">アプリケーションのデータベースコンテキスト。</param>
     public DetailsModel(AppDbContext context)
     {
         _context = context;
@@ -18,6 +22,12 @@ public class DetailsModel : PageModel
 
     public User User { get; set; } = default!;
 
+    /// <summary>
+    /// ユーザー詳細ページのGETリクエストを処理します。
+    /// 指定されたIDのユーザー情報を取得し、表示します。
+    /// </summary>
+    /// <param name="id">表示するユーザーのID。</param>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnGetAsync(string id)
     {
         if (id == null)

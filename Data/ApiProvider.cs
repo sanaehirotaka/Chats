@@ -12,31 +12,31 @@ namespace Chats.Data
         /// APIプロバイダーの名前を取得または設定します。
         /// これは主キーとして機能します。
         /// </summary>
-        public string ProviderName { get; set; }
+        public string ProviderName { get; set; } = default!;
 
         /// <summary>
         /// このAPIプロバイダー設定が関連付けられているユーザーのIDを取得または設定します。
         /// </summary>
         [Required]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = default!;
 
         /// <summary>
         /// このAPIプロバイダー設定が関連付けられているユーザーを取得または設定します。
         /// </summary>
-        public User User { get; set; }
+        public User User { get; set; } = default!;
 
         /// <summary>
         /// APIプロバイダーの認証情報を取得または設定します。
         /// このフィールドは必須です。
         /// </summary>
         [Required]
-        public string Credential { get; set; }
+        public string Credential { get; set; } = default!;
 
         /// <summary>
         /// APIプロバイダーが使用するモデルの識別子を取得または設定します。
         /// このフィールドは必須です。
         /// </summary>
         [Required]
-        public string Model { get; set; }
+        public string Model { get; set; } = default!;
     }
 }

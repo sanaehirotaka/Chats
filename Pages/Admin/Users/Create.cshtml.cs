@@ -12,6 +12,10 @@ public class CreateModel : PageModel
 {
     private readonly UserManager<User> _userManager;
 
+    /// <summary>
+    /// CreateModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="userManager">ユーザーを管理するためのマネージャー。</param>
     public CreateModel(UserManager<User> userManager)
     {
         _userManager = userManager;
@@ -46,11 +50,20 @@ public class CreateModel : PageModel
         public UserRole Role { get; set; }
     }
 
+    /// <summary>
+    /// ユーザー作成ページのGETリクエストを処理します。
+    /// </summary>
+    /// <returns>ページのアクション結果。</returns>
     public IActionResult OnGet()
     {
         return Page();
     }
 
+    /// <summary>
+    /// ユーザー作成ページのPOSTリクエストを処理します。
+    /// 新しいユーザーを作成し、データベースに保存します。
+    /// </summary>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)

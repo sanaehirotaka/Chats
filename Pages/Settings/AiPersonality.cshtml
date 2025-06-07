@@ -1,0 +1,88 @@
+@page "{id?}"
+@model Chats.Pages.Settings.AiPersonalityModel
+@{
+    ViewData["Title"] = "AIキャラ設定";
+}
+
+<div class="row">
+    <div class="col-md-4 content-container">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">作成済みのキャラ</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    @if (Model.AiPersonalities != null && Model.AiPersonalities.Any())
+                    {
+                        @foreach (var personality in Model.AiPersonalities)
+                        {
+                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <a asp-page="./AiPersonality" asp-route-id="@personality.Id" class="text-decoration-none flex-grow-1">
+                                    @personality.Name
+                                </a>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@personality.Id" onsubmit="return confirm('本当に削除しますか？');">
+                                    <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                                </form>
+                            </div>
+                        }
+                    }
+                    <a asp-page="./AiPersonality" asp-route-id="" class="btn btn-success mt-3">新規作成</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 content-container">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">キャラ設定の編集</h5>
+                    <div>
+                        <button type="button" id="regenerateRandomButton" class="btn btn-sm">ランダム生成</button>
+                        <span id="regenerateRandomWaitingMessage"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Input.Id" />
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.Name" class="control-label"></label>
+                        <input asp-for="Input.Name" class="form-control" />
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label asp-for="Input.Description" class="control-label me-2">自己紹介</label>
+                            <div>
+                                <button type="button" id="regenerateDescriptionButton" class="btn btn-sm">🔄</button>
+                                <span id="regenerateDescriptionWaitingMessage"></span>
+                            </div>
+                        </div>
+                        <textarea asp-for="Input.Description" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Input.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.SystemPrompt" class="control-label">システムプロンプト</label>
+                        <textarea asp-for="Input.SystemPrompt" class="form-control" rows="15"></textarea>
+                        <span asp-validation-for="Input.SystemPrompt" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3 d-flex justify-content-between">
+                        <div>
+                            <input type="submit" value="保存" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Pages/Settings/AiPersonality.cshtml.js" asp-append-version="true" defer></script>
+}

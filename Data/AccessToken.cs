@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chats.Data
 {
+    /// <summary>
+    /// ユーザー認証とAPIアクセス用のアクセストークンを表します。
+    /// </summary>
     public class AccessToken
     {
         [Key]

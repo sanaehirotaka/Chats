@@ -13,12 +13,23 @@ public class SSOModel : PageModel
     private readonly SignInManager<User> _signInManager;
     private readonly AppDbContext _context;
 
+    /// <summary>
+    /// SSOModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="signInManager">サインインマネージャー。</param>
+    /// <param name="context">アプリケーションのデータベースコンテキスト。</param>
     public SSOModel(SignInManager<User> signInManager, AppDbContext context)
     {
         _signInManager = signInManager;
         _context = context;
     }
 
+    /// <summary>
+    /// SSOページのGETリクエストを処理します。
+    /// 提供されたトークンを検証し、有効な場合はユーザーをサインインさせます。
+    /// </summary>
+    /// <param name="token">アクセスに使用するトークン。</param>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnGetAsync(string token)
     {
         if (string.IsNullOrEmpty(token))

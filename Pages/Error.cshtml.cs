@@ -16,11 +16,19 @@ public class ErrorModel : PageModel
 
     private readonly ILogger<ErrorModel> _logger;
 
+    /// <summary>
+    /// ErrorModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="logger">ロガーインスタンス。</param>
     public ErrorModel(ILogger<ErrorModel> logger)
     {
         _logger = logger;
     }
 
+    /// <summary>
+    /// HTTP GETリクエストがページに送信されたときに呼び出されます。
+    /// リクエストIDを設定します。
+    /// </summary>
     public void OnGet()
     {
         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Chats.Data;
 
 namespace Chats.Data;
 
@@ -12,6 +11,7 @@ public class AppDbContext : IdentityDbContext<User>
 {
     public DbSet<AccessToken> AccessTokens { get; set; }
     public DbSet<ApiProvider> ApiProviders { get; set; }
+    public DbSet<AiPersonalitySettings> AiPersonalitySettings { get; set; }
 
     /// <summary>
     /// <see cref="AppDbContext"/> クラスの新しいインスタンスを初期化します。

@@ -1,10 +1,36 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "ホームページ";
+    ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">ようこそ</h1>
-    <p><a href="https://learn.microsoft.com/aspnet/core">ASP.NET Core で Web アプリを構築する</a>方法を学びましょう。</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}
+
+<div class="hero-section">
+    <h1 class="display-4">ようこそ！</h1>
+    <p class="lead">AIチャットアプリケーションへようこそ。下のボタンから新しいチャットを開始するか、作成済みのキャラクターを選択してください。</p>
+    <a asp-page="/Chat" class="btn btn-primary start-chat-btn">チャットを開始</a>
+</div>
+
+<h2 class="text-center mb-4">キャラクター</h2>
+<div class="personalities-grid">
+    @foreach (var personality in Model.AiPersonalities)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@personality.Name</h5>
+                <p class="card-text">@personality.Description</p>
+                <a asp-page="/Chat" asp-route-AiPersonalityId="@personality.Id" class="btn btn-outline-primary stretched-link">このキャラクターとチャット</a>
+            </div>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">新しいキャラクター</h5>
+            <p class="card-text">好みのキャラクターがありませんか？作成しましょう。</p>
+            <a asp-page="/Settings/AiPersonality" class="btn btn-outline-primary stretched-link">新しいキャラクター</a>
+        </div>
+    </div>
 </div>

@@ -13,6 +13,11 @@ public class EditModel : PageModel
     private readonly UserManager<User> _userManager;
     private readonly AppDbContext _context;
 
+    /// <summary>
+    /// EditModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="userManager">ユーザーを管理するためのマネージャー。</param>
+    /// <param name="context">アプリケーションのデータベースコンテキスト。</param>
     public EditModel(UserManager<User> userManager, AppDbContext context)
     {
         _userManager = userManager;
@@ -39,6 +44,12 @@ public class EditModel : PageModel
         public UserRole Role { get; set; }
     }
 
+    /// <summary>
+    /// ユーザー編集ページのGETリクエストを処理します。
+    /// 指定されたIDのユーザー情報を取得し、編集フォームに表示します。
+    /// </summary>
+    /// <param name="id">編集するユーザーのID。</param>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnGetAsync(string id)
     {
         if (id == null)

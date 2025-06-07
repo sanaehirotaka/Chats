@@ -12,19 +12,6 @@ namespace Chats.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ApiProviders",
-                columns: table => new
-                {
-                    ProviderName = table.Column<string>(type: "TEXT", nullable: false),
-                    Credential = table.Column<string>(type: "TEXT", nullable: false),
-                    Model = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApiProviders", x => x.ProviderName);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -103,6 +90,47 @@ namespace Chats.Migrations
                     table.PrimaryKey("PK_AccessTokens", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AccessTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AiPersonalitySettings",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    SystemPrompt = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AiPersonalitySettings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AiPersonalitySettings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApiProviders",
+                columns: table => new
+                {
+                    ProviderName = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    Credential = table.Column<string>(type: "TEXT", nullable: false),
+                    Model = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApiProviders", x => new { x.ProviderName, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_ApiProviders_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -200,6 +228,16 @@ namespace Chats.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AiPersonalitySettings_UserId",
+                table: "AiPersonalitySettings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApiProviders_UserId",
+                table: "ApiProviders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -242,6 +280,9 @@ namespace Chats.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AccessTokens");
+
+            migrationBuilder.DropTable(
+                name: "AiPersonalitySettings");
 
             migrationBuilder.DropTable(
                 name: "ApiProviders");

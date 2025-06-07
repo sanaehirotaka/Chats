@@ -1,4 +1,19 @@
-﻿class Alert {
+﻿class ChatHistory {
+    /** 種類(assistant, user) @type {string} */
+    type;
+    /** コンテンツ @type {string} */
+    content;
+    /**
+     * @param {string} type 種類(assistant, user)
+     * @param {string} content コンテンツ
+     */
+    constructor(type, content) {
+        this.type = type;
+        this.content = content;
+    }
+}
+
+class Alert {
     constructor(message, title = '通知') {
         this.message = message;
         this.title = title;
@@ -89,6 +104,60 @@ class Confirm {
 
             document.body.append(dialogClone);
             customDialog.showModal(); // Show as a modal
+        });
+    }
+}
+
+class Prompt {
+    constructor(message, title = '入力', defaultValue = '') {
+        this.message = message;
+        this.title = title;
+        this.defaultValue = defaultValue;
+        this.customDialogTemplate = document.getElementById('customDialogTemplate');
+    }
+
+    show() {
+        return new Promise((resolve) => {
+            const dialogClone = this.customDialogTemplate.content.cloneNode(true);
+            const customDialog = dialogClone.querySelector('dialog');
+            const customDialogTitle = customDialog.querySelector('[data-dialog-part="title"]');
+            const customDialogMessage = customDialog.querySelector('[data-dialog-part="message"]');
+            const customDialogInput = customDialog.querySelector('[data-dialog-part="input"]');
+            const customDialogCancelButton = customDialog.querySelector('[data-dialog-part="cancelButton"]');
+            const customDialogConfirmButton = customDialog.querySelector('[data-dialog-part="confirmButton"]');
+            const customDialogCloseButton = customDialog.querySelector('[data-dialog-part="closeButton"]');
+
+            customDialogTitle.textContent = this.title;
+            customDialogMessage.textContent = this.message;
+            
+            customDialogInput.style.display = 'block';
+            customDialogInput.value = this.defaultValue;
+
+            const onConfirm = () => {
+                resolve(customDialogInput.value);
+                customDialog.close();
+                customDialog.remove();
+            };
+
+            const onCancel = () => {
+                resolve(null);
+                customDialog.close();
+                customDialog.remove();
+            };
+
+            customDialogConfirmButton.addEventListener('click', onConfirm);
+            customDialogCancelButton.addEventListener('click', onCancel);
+            customDialogCloseButton.addEventListener('click', onCancel);
+
+            customDialog.addEventListener('click', (event) => {
+                if (event.target === customDialog) {
+                    onCancel();
+                }
+            });
+
+            document.body.append(dialogClone);
+            customDialog.showModal();
+            customDialogInput.focus();
         });
     }
 }

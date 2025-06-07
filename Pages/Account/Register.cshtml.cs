@@ -85,6 +85,9 @@ public class RegisterModel : PageModel
     /// 入力を検証し、既存のユーザーをチェックし、パスワードをハッシュ化し、新しいユーザーをデータベースに保存します。
     /// </summary>
     /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
+    /// 入力を検証し、既存のユーザーをチェックし、パスワードをハッシュ化し、新しいユーザーをデータベースに保存します。
+    /// </summary>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnPostAsync()
     {
         if (_appSettings.SingleUserMode)

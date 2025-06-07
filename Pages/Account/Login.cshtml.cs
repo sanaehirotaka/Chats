@@ -20,6 +20,12 @@ public class LoginModel : PageModel
     private readonly UserManager<User> _userManager;
     private readonly ILogger<LoginModel> _logger;
 
+    /// <summary>
+    /// LoginModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="signInManager">サインインマネージャー。</param>
+    /// <param name="userManager">ユーザーマネージャー。</param>
+    /// <param name="logger">ロガーインスタンス。</param>
     public LoginModel(SignInManager<User> signInManager, UserManager<User> userManager, ILogger<LoginModel> logger) // Update constructor
     {
         _signInManager = signInManager;

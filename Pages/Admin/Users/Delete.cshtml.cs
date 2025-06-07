@@ -13,6 +13,11 @@ public class DeleteModel : PageModel
     private readonly UserManager<User> _userManager;
     private readonly AppDbContext _context;
 
+    /// <summary>
+    /// DeleteModelクラスの新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="userManager">ユーザーを管理するためのマネージャー。</param>
+    /// <param name="context">アプリケーションのデータベースコンテキスト。</param>
     public DeleteModel(UserManager<User> userManager, AppDbContext context)
     {
         _userManager = userManager;
@@ -21,6 +26,12 @@ public class DeleteModel : PageModel
 
     public User DisplayUser { get; set; } = default!;
 
+    /// <summary>
+    /// ユーザー削除ページのGETリクエストを処理します。
+    /// 指定されたIDのユーザー情報を取得し、表示します。
+    /// </summary>
+    /// <param name="id">削除するユーザーのID。</param>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnGetAsync(string id)
     {
         if (id == null)
@@ -37,6 +48,12 @@ public class DeleteModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// ユーザー削除ページのPOSTリクエストを処理します。
+    /// 指定されたIDのユーザーを削除します。
+    /// </summary>
+    /// <param name="id">削除するユーザーのID。</param>
+    /// <returns>操作の結果を表す <see cref="IActionResult"/>。</returns>
     public async Task<IActionResult> OnPostAsync(string id)
     {
         if (id == null)

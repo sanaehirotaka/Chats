@@ -13,6 +13,10 @@
     gap: 10px;
 }
 
+#candicate-container .btn {
+    margin: 0.1rem;
+}
+
 .chat-message {
     display: flex;
 }
@@ -32,7 +36,7 @@
     word-wrap: break-word;
     font-size: 0.95rem;
     line-height: 1.4;
-    position: relative; /* ボタンを絶対配置するために追加 */
+    position: relative;
 }
 :is(.message-bubble:hover, .message-bubble:focus, .message-bubble:has(:focus), .message-bubble:has([contentEditable])) .chat-action {
     opacity: 1;
@@ -74,6 +78,22 @@
 }
 
 .chat-message.user .message-bubble {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #dee2e6;
+}
+
+.message-bubble h1 {
+    font-size: 1.75rem;
+}
+.message-bubble h2 {
+    font-size: 1.5rem;
+}
+.message-bubble h3 {
+    font-size: 1.25rem;
+}
+.message-bubble h4,
+.message-bubble h5,
+.message-bubble h6 {
+    font-size: 1.1rem;
 }

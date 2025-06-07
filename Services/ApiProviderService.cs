@@ -1,5 +1,8 @@
 using Chats.Data;
+using Chats.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Chats.Services;
 
@@ -14,13 +17,19 @@ public class ApiProviderService
     /// </summary>
     private readonly AppDbContext _context;
 
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    private readonly UserManager<User> _userManager;
+
     /// <summary>
     /// ApiProviderServiceクラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="context">アプリケーションのデータベースコンテキスト。</param>
-    public ApiProviderService(AppDbContext context)
+    public ApiProviderService(AppDbContext context, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
     {
         _context = context;
+        _httpContextAccessor = httpContextAccessor;
+        _userManager = userManager;
     }
 
     /// <summary>
@@ -32,6 +41,16 @@ public class ApiProviderService
     public async Task<ApiProvider?> GetAsync(string providerName, string userId)
     {
         return await _context.ApiProviders.FirstOrDefaultAsync(p => p.ProviderName == providerName && p.UserId == userId);
+    }
+
+    /// <summary>
+    /// 指定されたユーザーIDのすべてのAPIプロバイダー設定を非同期に取得します。
+    /// </summary>
+    /// <param name="userId">ユーザーのID。</param>
+    /// <returns>指定されたユーザーIDのApiProviderオブジェクトのコレクション。</returns>
+    public async Task<IEnumerable<ApiProvider>> GetAllAsync(string userId)
+    {
+        return await _context.ApiProviders.Where(p => p.UserId == userId).ToListAsync();
     }
 
     /// <summary>
@@ -72,5 +91,37 @@ public class ApiProviderService
         }
 
         await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// ログインユーザーのAPIプロバイダー設定を非同期ストリームとして取得します。
+    /// </summary>
+    /// <returns>ApiProviderModelオブジェクトの非同期列挙。</returns>
+    public async IAsyncEnumerable<ApiProviderModel> GetProvidersByLoginUser()
+    {
+        var user = GetCurrentUserClaimsPrincipal();
+        if (user == null)
+        {
+            yield break;
+        }
+        var userId = _userManager.GetUserId(user);
+        if (userId == null)
+        {
+            yield break;
+        }
+        var providers = await GetAllAsync(userId);
+
+        foreach (var provider in providers)
+        {
+            yield return new ApiProviderModel(provider);
+        }
+    }
+    /// <summary>
+    /// 現在ログインしているユーザーのClaimsPrincipalを取得します。
+    /// </summary>
+    /// <returns>現在のユーザーのClaimsPrincipal、またはユーザーがログインしていない場合はnull。</returns>
+    private ClaimsPrincipal? GetCurrentUserClaimsPrincipal()
+    {
+        return _httpContextAccessor.HttpContext?.User;
     }
 }

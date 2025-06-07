@@ -14,7 +14,7 @@ namespace Chats.Models.ApiProviders
         /// </summary>
         [Required(ErrorMessage = "API Keyは必須です。")]
         [Display(Name = "Gemini API Key")]
-        public string ApiKey { get; set; }
+        public string ApiKey { get; set; } = default!;
 
         /// <summary>
         /// 使用するGeminiモデルのテキスト識別子を取得または設定します。
@@ -22,6 +22,6 @@ namespace Chats.Models.ApiProviders
         /// </summary>
         [Required(ErrorMessage = "モデルは必須です。")]
         [Display(Name = "Model")]
-        public string ModelText { get; set; }
+        public string ModelText { get; set; } = default!;
     }
 }

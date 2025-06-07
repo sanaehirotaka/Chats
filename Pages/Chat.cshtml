@@ -1,7 +1,7 @@
-@page
+@page "/Chat/{AiPersonalityId?}"
 @model Chats.Pages.ChatModel
 @{
-    ViewData["Title"] = "無題のチャット";
+    ViewData["Title"] = Model.AiPersonality != null ? (Model.AiPersonality.Name + "とのチャット") : ("無題のチャット");
 }
 @section Head {
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
@@ -9,13 +9,24 @@
 
 @section Scripts {
     <script src="~/lib/marked.min.js" asp-append-version="true" defer></script>
+    <script>
+        window.AiPersonality = @Json.Serialize(Model.AiPersonality);
+    </script>
     <script src="~/Pages/Chat.cshtml.js" asp-append-version="true" defer></script>
 }
 
 <div class="row">
     <div class="col-md-12 content-container">
-        <h2>@ViewData["Title"]</h2>
-        <div id="chat-container" class="mb-3">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5>@ViewData["Title"]</h5>
+            <div class="input-group" style="width: auto;">
+                <label for="modelSelect" class="input-group-text">モデル</label>
+                <select id="modelSelect" class="form-select" asp-items="Model.AvaiableModels" asp-for="SelectedModel"></select>
+            </div>
+        </div>
+        <div id="chat-container" class="mb-2">
+        </div>
+        <div id="candicate-container" class="mb-2">
         </div>
         <div class="input-group">
             <textarea id="messageInput" class="form-control" placeholder="メッセージを入力..." rows="2"></textarea>
