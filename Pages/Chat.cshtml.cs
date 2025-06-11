@@ -54,6 +54,7 @@ public class ChatModel : PageModel
     {
         var providers = await _apiProviderService.GetProvidersByLoginUser().ToListAsync();
         AvaiableModels = [.. providers.SelectMany(p => p.Models.Select(m => $"{p.ProviderName}/{m}")).Select(m => new SelectListItem(m, m))];
+        SelectedModel ??= AvaiableModels.FirstOrDefault()?.Value;
 
         if (!string.IsNullOrEmpty(AiPersonalityId))
         {

@@ -19,10 +19,17 @@
     <div class="col-md-12 content-container">
         <div class="d-flex justify-content-between align-items-start mb-2">
             <h5>@ViewData["Title"]</h5>
-            <div class="input-group" style="width: auto;">
-                <label for="modelSelect" class="input-group-text">モデル</label>
-                <select id="modelSelect" class="form-select" asp-items="Model.AvaiableModels" asp-for="SelectedModel"></select>
-            </div>
+            @if (Model.AvaiableModels.Count == 1)
+            {
+                <input id="modelSelect" type="hidden" asp-for="SelectedModel" />
+            }
+            else
+            {
+                <div class="input-group" style="width: auto;">
+                    <label for="modelSelect" class="input-group-text">モデル</label>
+                    <select id="modelSelect" class="form-select" asp-items="Model.AvaiableModels" asp-for="SelectedModel"></select>
+                </div>
+            }
         </div>
         <div id="chat-container" class="mb-2">
         </div>
