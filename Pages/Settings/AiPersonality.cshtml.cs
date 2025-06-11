@@ -50,7 +50,6 @@ namespace Chats.Pages.Settings
 
             var records = await _context.AiPersonalitySettings
                                             .Where(a => a.UserId == user.Id)
-                                            .OrderBy(a => a.Name)
                                             .ToListAsync();
 
             AiPersonalities = records.Select(r => new InputModel()
